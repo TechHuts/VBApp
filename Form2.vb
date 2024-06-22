@@ -74,7 +74,7 @@ Public Class Form2
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         MessageBox.Show("Yes")
-        SaveSubmissionAsync().Wait(100)
+        SaveSubmissionAsync().Wait()
     End Sub
 
     Private Async Function SaveSubmissionAsync() As Task

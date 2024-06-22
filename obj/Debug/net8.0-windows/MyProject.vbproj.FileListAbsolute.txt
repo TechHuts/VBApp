@@ -19,3 +19,6 @@ D:\aaaa\MyProject\obj\Debug\net8.0-windows\MyProject.Form3.resources
 D:\aaaa\MyProject\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 D:\aaaa\MyProject\obj\Debug\net8.0-windows\MyProject.vbproj.AssemblyReference.cache
 D:\aaaa\MyProject\obj\Debug\net8.0-windows\MyProject.vbproj.Up2Date
+D:\projects\VBApp\obj\Debug\net8.0-windows\MyProject.dll
+D:\projects\VBApp\obj\Debug\net8.0-windows\refint\MyProject.dll
+D:\projects\VBApp\obj\Debug\net8.0-windows\MyProject.pdb

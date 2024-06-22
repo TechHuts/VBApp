@@ -10,10 +10,13 @@ const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 const PORT = 3000;
 const dbFilePath = path_1.default.join(__dirname, 'db.json');
+
 app.use(body_parser_1.default.json());
+
 app.get('/ping', (req, res) => {
     res.json(true);
 });
+
 app.post('/submit', (req, res) => {
     const { name, email, phone, github_link, stopwatch_time } = req.body;
     if (!name || !email || !phone || !github_link || !stopwatch_time) {
@@ -22,18 +25,27 @@ app.post('/submit', (req, res) => {
     const newSubmission = { name, email, phone, github_link, stopwatch_time };
     fs_1.default.readFile(dbFilePath, 'utf8', (err, data) => {
         if (err) {
+            console.error("Error reading database file:", err);
             return res.status(500).json({ error: 'Error reading database file' });
         }
-        const submissions = data ? JSON.parse(data) : [];
+        let submissions = [];
+        try {
+            submissions = data ? JSON.parse(data) : [];
+        } catch (parseErr) {
+            console.error("Error parsing database file:", parseErr);
+            return res.status(500).json({ error: 'Error parsing database file' });
+        }
         submissions.push(newSubmission);
         fs_1.default.writeFile(dbFilePath, JSON.stringify(submissions, null, 2), 'utf8', (err) => {
             if (err) {
+                console.error("Error writing to database file:", err);
                 return res.status(500).json({ error: 'Error writing to database file' });
             }
             res.status(201).json(newSubmission);
         });
     });
 });
+
 app.get('/read', (req, res) => {
     const { index } = req.query;
     if (index === undefined) {
@@ -45,15 +57,24 @@ app.get('/read', (req, res) => {
     }
     fs_1.default.readFile(dbFilePath, 'utf8', (err, data) => {
         if (err) {
+            console.error("Error reading database file:", err);
             return res.status(500).json({ error: 'Error reading database file' });
         }
-        const submissions = data ? JSON.parse(data) : [];
+        let submissions = [];
+        try {
+            submissions = data ? JSON.parse(data) : [];
+        } catch (parseErr) {
+            console.error("Error parsing database file:", parseErr);
+            return res.status(500).json({ error: 'Error parsing database file' });
+        }
         if (idx >= submissions.length) {
             return res.status(404).json({ error: 'Submission not found' });
         }
         res.json(submissions[idx]);
     });
 });
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
